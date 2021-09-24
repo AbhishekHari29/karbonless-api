@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
+const Activity = require("../models/activity");
 
 const userSchema = new mongoose.Schema(
 	{
@@ -55,6 +56,12 @@ const userSchema = new mongoose.Schema(
 	}
 );
 
+userSchema.virtual("activities", {
+	ref: "Activity",
+	localField: "_id",
+	foreignField: "owner"
+});
+
 //Display Public Information
 userSchema.methods.toJSON = function () {
 	const user = this;
@@ -94,6 +101,13 @@ userSchema.pre("save", async function (next) {
 	const user = this;
 	if (user.isModified("password"))
 		user.password = await bcrypt.hash(user.password, 8);
+	next();
+});
+
+//Delete Activities when user is Deleted
+userSchema.pre("remove", async function (next) {
+	const user = this;
+	await Activity.deleteMany({ owner: user._id });
 	next();
 });
 
