@@ -61,7 +61,8 @@ const updateActivity = async (req, res) => {
 	const _id = req.params.id;
 
 	const updates = Object.keys(req.body);
-	const allowedUpdates = ["name", "description", "type", "cfg"];
+	// const allowedUpdates = ["name", "description", "type", "cfg"];
+	const allowedUpdates = ["category", "type", "total_emission", "mode", "quantity", "co2_emission"];
 	const isValidOperation = updates.every((update) =>
 		allowedUpdates.includes(update)
 	);
