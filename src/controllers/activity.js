@@ -1,3 +1,4 @@
+const moment = require("moment");
 const Activity = require("../models/activity");
 
 //Create Activity
@@ -18,12 +19,22 @@ const readAllActivity = async (req, res) => {
 	const match = {};
 	const sort = {};
 
-	// if (req.query.completed)
-	// 	match.completed = req.query.completed === 'true'
-
 	if (req.query.category) match.category = req.query.category;
 
 	if (req.query.type) match.type = req.query.type;
+
+	if (req.query.duration) {
+		const duration = req.query.duration;
+		if (/^current(day|week|month)$/i.test(duration)) {
+			req.query = { ...req.query, ...getFirstDateOf(duration) };
+		} else if (/^\d+:(day|week|month)$/i.test(duration)) {
+			const parts = duration.split(":");
+			const value = parseInt(parts[0]);
+			const type = parts[1].trim();
+			req.query.from = moment().subtract(value, type).toDate().getTime();
+			req.query.until = new Date().getTime();
+		}
+	}
 
 	if (req.query.from)
 		match.createdAt = {
@@ -60,6 +71,30 @@ const readAllActivity = async (req, res) => {
 	} catch (error) {
 		res.status(500).send(error);
 	}
+};
+
+const getFirstDateOf = (duration) => {
+	let from = new Date();
+	let until = new Date();
+	switch (duration.toLowerCase()) {
+		case "currentday":
+			break;
+		case "currentweek":
+			from.setDate(until.getDate() - until.getDay());
+			break;
+		case "currentmonth":
+			from.setDate(1);
+			break;
+		default:
+			break;
+	}
+	from.setHours(0);
+	from.setMinutes(0);
+	from.setSeconds(0);
+	from.setMilliseconds(0);
+	from = from.getTime();
+	until = until.getTime();
+	return { from, until };
 };
 
 //Read Activity by Id

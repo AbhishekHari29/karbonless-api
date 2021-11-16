@@ -13,4 +13,12 @@ app.use(userRouter);
 app.use(activityRouter);
 app.use("/footprint", footprintRouter);
 
+app.get("/", (req, res) => {
+	res.send("Welcome to Karbonless API");
+});
+
+app.get("*", (req, res) => {
+    res.send("Sorry! Could find any response. Please Check your input path.")
+})
+
 module.exports = app;
