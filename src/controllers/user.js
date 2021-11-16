@@ -11,7 +11,7 @@ const loginUser = async (req, res) => {
 		const token = await user.generateAuthToken();
 		res.send({ user, token });
 	} catch (error) {
-		res.status(400).send(error);
+		res.status(400).send(error.message);
 	}
 };
 
@@ -47,7 +47,7 @@ const createUser = async (req, res) => {
 		const token = await user.generateAuthToken();
 		res.status(201).send({ user, token });
 	} catch (error) {
-		res.status(400).send(error);
+		res.status(400).send(error.message);
 	}
 };
 
@@ -84,7 +84,7 @@ const updateUser = async (req, res) => {
 		await req.user.save();
 		res.send(req.user);
 	} catch (error) {
-		res.status(400).send(error);
+		res.status(400).send(error.message);
 	}
 };
 

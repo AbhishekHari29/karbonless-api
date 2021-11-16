@@ -21,9 +21,27 @@ const readAllActivity = async (req, res) => {
 	// if (req.query.completed)
 	// 	match.completed = req.query.completed === 'true'
 
+	if (req.query.category) match.category = req.query.category;
+
+	if (req.query.type) match.type = req.query.type;
+
+	if (req.query.from)
+		match.createdAt = {
+			...match.createdAt,
+			$gte: new Date(Number(req.query.from))
+		};
+
+	if (req.query.until)
+		match.createdAt = {
+			...match.createdAt,
+			$lte: new Date(Number(req.query.until))
+		};
+
 	if (req.query.sortBy) {
 		const parts = req.query.sortBy.split(":");
 		sort[parts[0]] = parts[1] === "desc" ? -1 : 1;
+	} else {
+		sort.createdAt = -1;
 	}
 
 	try {
@@ -62,7 +80,14 @@ const updateActivity = async (req, res) => {
 
 	const updates = Object.keys(req.body);
 	// const allowedUpdates = ["name", "description", "type", "cfg"];
-	const allowedUpdates = ["category", "type", "total_emission", "mode", "quantity", "co2_emission"];
+	const allowedUpdates = [
+		"category",
+		"type",
+		"total_emission",
+		"mode",
+		"quantity",
+		"co2_emission"
+	];
 	const isValidOperation = updates.every((update) =>
 		allowedUpdates.includes(update)
 	);
