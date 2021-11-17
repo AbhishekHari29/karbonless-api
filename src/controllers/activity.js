@@ -8,7 +8,7 @@ const createActivity = async (req, res) => {
 		const result = await activity.save();
 		res.send(result);
 	} catch (error) {
-		res.status(400).send();
+		res.status(400).send(error.message);
 	}
 };
 
@@ -67,9 +67,32 @@ const readAllActivity = async (req, res) => {
 				}
 			})
 			.execPopulate();
-		res.send(req.user.activities);
+
+		if (req.query.aggregate) {
+			const count = req.user.activities.length;
+			const sum = req.user.activities.reduce(
+				(total, activity) => total + activity.total_emission,
+				0
+			);
+			const average = sum / count;
+			switch (req.query.aggregate.toLowerCase()) {
+				case "count":
+					res.send({ count });
+					break;
+				case "sum":
+					res.send({ sum });
+					break;
+				case "average":
+					res.send({ average });
+					break;
+				default:
+					res.send(null);
+			}
+		} else {
+			res.send(req.user.activities);
+		}
 	} catch (error) {
-		res.status(500).send(error);
+		res.status(500).send(error.message);
 	}
 };
 
@@ -105,7 +128,7 @@ const readActivity = async (req, res) => {
 		if (!activity) return res.status(404).send();
 		res.send(activity);
 	} catch (error) {
-		res.status(500).send();
+		res.status(500).send(error.message);
 	}
 };
 
@@ -114,12 +137,12 @@ const updateActivity = async (req, res) => {
 	const _id = req.params.id;
 
 	const updates = Object.keys(req.body);
-	// const allowedUpdates = ["name", "description", "type", "cfg"];
 	const allowedUpdates = [
 		"category",
 		"type",
 		"total_emission",
 		"mode",
+		"distance",
 		"quantity",
 		"co2_emission"
 	];
@@ -137,7 +160,7 @@ const updateActivity = async (req, res) => {
 		await activity.save();
 		res.send(activity);
 	} catch (error) {
-		res.status(400).send(error);
+		res.status(400).send(error.message);
 	}
 };
 
@@ -152,7 +175,7 @@ const deleteActivity = async (req, res) => {
 		if (!activity) return res.status(404).send();
 		res.send(activity);
 	} catch (error) {
-		res.status(500).send(error);
+		res.status(500).send(error.message);
 	}
 };
 

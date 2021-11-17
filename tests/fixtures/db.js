@@ -32,29 +32,38 @@ const userTwo = {
 const activityOneId = new mongoose.Types.ObjectId();
 const activityOne = {
 	_id: activityOneId,
-	name: "activity One",
-	type:"CFG",
-	cfg: 1.2,
-	owner: userOneId
+	owner: userOneId,
+	category: "Travel",
+	type: "Two Wheelers, Scooter",
+	co2_emission: 0.03425,
+	mode: "Land",
+	total_emission: 0.17125,
+	distance: 5,
+	category: "Travel"
 };
 
 const activityTwoId = new mongoose.Types.ObjectId();
 const activityTwo = {
 	_id: activityTwoId,
-	name: "activity Two",
-	type:"CFG",
-	cfg: 2.3,
-	owner: userOneId
+	owner: userOneId,
+	type: "Aircraft, A319",
+	co2_emission: 2310,
+	mode: "Air",
+	total_emission: 4620,
+	distance: 2,
+	category: "Travel"
 };
 
 const activityThreeId = new mongoose.Types.ObjectId();
 const activityThree = {
 	_id: activityThreeId,
-	name: "activity Three",
-	cfg: 3.4,
-	type:"CFG",
-	description:"Activity 3 Description",
-	owner: userTwoId
+	owner: userTwoId,
+	type: "Two Wheelers, Scooter",
+	co2_emission: 0.03425,
+	mode: "Land",
+	total_emission: 0.0685,
+	distance: 2,
+	category: "Travel"
 };
 
 const populateDatabase = async () => {

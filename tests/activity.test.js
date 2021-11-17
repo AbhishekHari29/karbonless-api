@@ -21,7 +21,15 @@ test("Create Activity", async () => {
 	const response = await request(app)
 		.post("/activity")
 		.set("Authorization", `Bearer ${userOne.tokens[0].token}`)
-		.send({ name:"Test 1", type:"CFG", cfg:1.5 })
+		.send({
+			category: "Travel",
+			type: "Two Wheelers, Scooter",
+			co2_emission: 0.03425,
+			mode: "Land",
+			total_emission: 0.17125,
+			distance: 5,
+			category: "Travel"
+		})
 		.expect(200);
 
 	const activity = await Activity.findById(response.body._id);
