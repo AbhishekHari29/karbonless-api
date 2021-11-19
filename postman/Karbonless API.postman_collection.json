@@ -6,429 +6,518 @@
 	},
 	"item": [
 		{
-			"name": "Login User",
-			"event": [
+			"name": "User Management",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"if(pm.response.code === 200){\r",
-							"    pm.environment.set('authToken',pm.response.json().token)\r",
-							"}"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"abhishekhari@gmail.com\",\r\n    \"password\":\"Abhishek123\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code === 200){\r",
+									"    pm.environment.set('authToken',pm.response.json().token)\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"abhishekhari@gmail.com\",\r\n    \"password\":\"Abhishek123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{url}}/users/login",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"users",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Logout User",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/users/logoutAll",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"users",
-						"logoutAll"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create User",
-			"event": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"if(pm.response.code === 201){\r",
-							"    pm.environment.set('authToken',pm.response.json().token)\r",
-							"}"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
+					"name": "Logout User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"logout"
+							]
+						}
+					},
+					"response": []
 				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"daiyan@gmail.com\",\r\n    \"email\":\"daiyan@gmail.com\",\r\n    \"password\":\"daiyan@123\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Logout User All",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/logoutAll",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"logoutAll"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{url}}/users",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Upload Profile Avatar",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
+				{
+					"name": "Create User",
+					"event": [
 						{
-							"key": "avatar",
-							"type": "file",
-							"src": "/C:/Projects/Pfiffner/img/profile-preview-sample.png"
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code === 201){\r",
+									"    pm.environment.set('authToken',pm.response.json().token)\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
 						}
-					]
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"daiyan@gmail.com\",\r\n    \"email\":\"daiyan@gmail.com\",\r\n    \"password\":\"daiyan@123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{url}}/users/me/avatar",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"users",
-						"me",
-						"avatar"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Read Profile",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/users/me",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"users",
-						"me"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Read User By Id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/users/60f6db6b5b0a6335386fcc17",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"users",
-						"60f6db6b5b0a6335386fcc17"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Profile Avatar",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/users/6128591988247f2c60c59db7/avatar",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"users",
-						"6128591988247f2c60c59db7",
-						"avatar"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update User by Id",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"Abhishek Hari\",\r\n    \"password\":\"Abhishek12345\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Upload Profile Avatar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Projects/Pfiffner/img/profile-preview-sample.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/users/me/avatar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"me",
+								"avatar"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{url}}/users/me",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"users",
-						"me"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete User",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/users/me",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"users",
-						"me"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Profile Avatar",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/users/me/avatar",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"users",
-						"me",
-						"avatar"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create Activity",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"category\": \"Air\",\r\n    \"type\": \"Aircraft, A319\",\r\n    \"co2_emission\": 2310,\r\n    \"mode\": \"Air\",\r\n    \"total_emission\": 4620,\r\n    \"distance\": 2\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Read Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/me",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{url}}/activity",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"activity"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Read Activity",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/activity",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"activity"
-					],
-					"query": [
-						{
-							"key": "until",
-							"value": "1637066085929",
-							"disabled": true
-						},
-						{
-							"key": "from",
-							"value": "1636696469157",
-							"disabled": true
-						},
-						{
-							"key": "category",
-							"value": "Travel",
-							"disabled": true
-						},
-						{
-							"key": "type",
-							"value": "Two Wheelers, Scooter",
-							"disabled": true
-						},
-						{
-							"key": "sortBy",
-							"value": "type:desc",
-							"disabled": true
-						},
-						{
-							"key": "limit",
-							"value": "10",
-							"disabled": true
-						},
-						{
-							"key": "skip",
-							"value": "5",
-							"disabled": true
-						},
-						{
-							"key": "duration",
-							"value": "currentWeek",
-							"disabled": true
+				{
+					"name": "Read User By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/60f6db6b5b0a6335386fcc17",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"60f6db6b5b0a6335386fcc17"
+							]
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update Activity",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"type\":\"CFG\",\r\n    \"total_emission\":3.5\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{url}}/activity/614ddfb4ad98920d00797cba",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"activity",
-						"614ddfb4ad98920d00797cba"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Activity",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/activity/614ddf47ad98920d00797cb7",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"activity",
-						"614ddf47ad98920d00797cb7"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Travel Footprint",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Get Profile Avatar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/6128591988247f2c60c59db7/avatar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"6128591988247f2c60c59db7",
+								"avatar"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{url}}/footprint/travel?type=Two Wheelers, Scooter&mode=Land&distance=3",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"footprint",
-						"travel"
-					],
-					"query": [
-						{
-							"key": "type",
-							"value": "Two Wheelers, Scooter"
+				{
+					"name": "Update User by Id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Abhishek Hari\",\r\n    \"password\":\"Abhishek12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "mode",
-							"value": "Land"
-						},
-						{
-							"key": "distance",
-							"value": "3"
+						"url": {
+							"raw": "{{url}}/users/me",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/me",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Profile Avatar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/me/avatar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"me",
+								"avatar"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "Activity Logging",
+			"item": [
+				{
+					"name": "Create Activity",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category\": \"Air\",\r\n    \"type\": \"Aircraft, A319\",\r\n    \"co2_emission\": 2310,\r\n    \"mode\": \"Air\",\r\n    \"total_emission\": 4620,\r\n    \"distance\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/activity",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Activity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/activity",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activity"
+							],
+							"query": [
+								{
+									"key": "until",
+									"value": "1637066085929",
+									"disabled": true
+								},
+								{
+									"key": "from",
+									"value": "1636696469157",
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "Two Wheelers, Scooter",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "type:desc",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"disabled": true
+								},
+								{
+									"key": "skip",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "duration",
+									"value": "currentDay",
+									"disabled": true
+								},
+								{
+									"key": "category",
+									"value": "Travel",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Activity",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\":\"CFG\",\r\n    \"total_emission\":3.5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/activity/614ddfb4ad98920d00797cba",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activity",
+								"614ddfb4ad98920d00797cba"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Activity",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/activity/614ddf47ad98920d00797cb7",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"activity",
+								"614ddf47ad98920d00797cb7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Footprint",
+			"item": [
+				{
+					"name": "All Travel Footprint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/footprint/travel/all",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"footprint",
+								"travel",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Travel Footprint",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/footprint/travel?type=Two Wheelers, Scooter&mode=Land&distance=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"footprint",
+								"travel"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Two Wheelers, Scooter"
+								},
+								{
+									"key": "mode",
+									"value": "Land"
+								},
+								{
+									"key": "distance",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Food Footprint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "Add Food Footprint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/footprint/food?type=Chapathi&quantity=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"footprint",
+								"food"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Chapathi"
+								},
+								{
+									"key": "quantity",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"auth": {
