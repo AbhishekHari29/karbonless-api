@@ -17,11 +17,6 @@ const foodData = xlsx.utils.sheet_to_json(
 const productData = undefined;
 
 // MinMax Footprint
-const minTravel = travelData.reduce(minEmission, travelData[0]).co2_emission;
-const maxTravel = travelData.reduce(maxEmission, travelData[0]).co2_emission;
-const minFood = foodData.reduce(minEmission, foodData[0]).co2_emission;
-const maxFood = foodData.reduce(maxEmission, foodData[0]).co2_emission;
-
 const minEmission = (min, value) =>
 	min.co2_emission < value.co2_emission ? min : value;
 
@@ -30,6 +25,12 @@ const maxEmission = (min, value) =>
 
 const computeKredits = (value, max, min) =>
 	Math.floor(((max - value) / (max - min)) * 10);
+	
+const minTravel = travelData.reduce(minEmission, travelData[0]).co2_emission;
+const maxTravel = travelData.reduce(maxEmission, travelData[0]).co2_emission;
+const minFood = foodData.reduce(minEmission, foodData[0]).co2_emission;
+const maxFood = foodData.reduce(maxEmission, foodData[0]).co2_emission;
+
 
 // Travel
 const computeTravelFootprint = (type, mode, distance = 1) => {
