@@ -5,6 +5,7 @@ const Activity = require("../models/activity");
 const createActivity = async (req, res) => {
 	const activity = new Activity({ ...req.body, owner: req.user._id });
 	try {
+		req.user.addKredits(req.body.kredit);
 		const result = await activity.save();
 		res.send(result);
 	} catch (error) {

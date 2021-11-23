@@ -1,4 +1,5 @@
 const app = require("./app");
+require("./streak");
 
 const port = process.env.PORT;
 

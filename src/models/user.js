@@ -2,7 +2,10 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
+const moment = require("moment");
 const Activity = require("../models/activity");
+
+const dailyLimit = 10000;
 
 const userSchema = new mongoose.Schema(
 	{
@@ -38,6 +41,18 @@ const userSchema = new mongoose.Schema(
 			validate(value) {
 				if (value < 0) throw new Error("Age should be positive number");
 			}
+		},
+		kredit: {
+			type: Number,
+			default: 0
+		},
+		rank: {
+			type: Number,
+			default: 0
+		},
+		streak: {
+			type: Number,
+			default: 0
 		},
 		tokens: [
 			{
@@ -85,6 +100,47 @@ userSchema.methods.generateAuthToken = async function () {
 	await user.save();
 
 	return token;
+};
+
+// Check Streak
+userSchema.methods.checkStreak = async function (date = new Date()) {
+	const user = this;
+	const result = await Activity.aggregate([
+		{
+			$match: {
+				owner: user._id,
+				createdAt: {
+					$gte: moment(date).subtract(1, "day").toDate(),
+					$lte: date
+				}
+			}
+		},
+		{
+			$group: {
+				_id: null,
+				totalEmission: { $sum: "$total_emission" }
+			}
+		}
+	]);
+
+	if (result.length > 0 && result[0].totalEmission <= dailyLimit) {
+		user.streak++;
+		user.kredit += 100;
+		if (user.streak !== 0 && user.streak % 7 === 0) user.kredit += 300;
+		if (user.streak !== 0 && user.streak % 30 === 0) user.kredit += 1000;
+	} else {
+		user.streak = 0;
+	}
+	user.rank = Math.floor(user.kredit / 1000);
+	await user.save();
+};
+
+// Add Kredits
+userSchema.methods.addKredits = async function (kredit = 0) {
+	const user = this;
+	user.kredit += kredit;
+	user.rank = Math.floor(user.kredit / 1000);
+	await user.save();
 };
 
 //Find User by Credentials
