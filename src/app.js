@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 require("./db/mongoose");
@@ -14,11 +15,12 @@ app.use(activityRouter);
 app.use("/footprint", footprintRouter);
 
 app.get("/", (req, res) => {
-	res.send("Welcome to Karbonless API");
+	// res.send("Welcome to Karbonless API");
+	res.sendFile(path.join(__dirname, "./public/index.html"));
 });
 
 app.get("*", (req, res) => {
-    res.send("Sorry! Could find any response. Please Check your input path.")
-})
+	res.send("Sorry! Could find any response. Please Check your input path.");
+});
 
 module.exports = app;
