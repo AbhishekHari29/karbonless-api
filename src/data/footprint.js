@@ -14,7 +14,9 @@ const travelData = xlsx.utils.sheet_to_json(
 const foodData = xlsx.utils.sheet_to_json(
 	footprintWorkbook.Sheets[footprintWorkbook.SheetNames[1]]
 );
-const productData = undefined;
+const productData = xlsx.utils.sheet_to_json(
+	footprintWorkbook.Sheets[footprintWorkbook.SheetNames[2]]
+);
 
 // MinMax Footprint
 const minEmission = (min, value) =>
@@ -25,12 +27,13 @@ const maxEmission = (min, value) =>
 
 const computeKredits = (value, max, min) =>
 	Math.floor(((max - value) / (max - min)) * 10);
-	
+
 const minTravel = travelData.reduce(minEmission, travelData[0]).co2_emission;
 const maxTravel = travelData.reduce(maxEmission, travelData[0]).co2_emission;
 const minFood = foodData.reduce(minEmission, foodData[0]).co2_emission;
 const maxFood = foodData.reduce(maxEmission, foodData[0]).co2_emission;
-
+const minProduct = productData.reduce(minEmission, productData[0]).co2_emission;
+const maxProduct = productData.reduce(maxEmission, productData[0]).co2_emission;
 
 // Travel
 const computeTravelFootprint = (type, mode, distance = 1) => {
@@ -55,7 +58,19 @@ const computeFoodFootprint = (type, quantity = 1) => {
 };
 
 // Product
-const computeProductFootprint = (productName) => {};
+const computeProductFootprint = (type, quantity = 1) => {
+	// var result = productData.find((data) => type === data.type);
+	var result = productData.find(
+		(data) =>
+			new RegExp(`.*${data.type}.*`, "i").test(type) ||
+			new RegExp(`.*${type}.*`, "i").test(data.type)
+	);
+	if (!result) return;
+	result.total_emission = result.co2_emission * quantity;
+	result.quantity = quantity;
+	result.kredit = computeKredits(result.co2_emission, maxProduct, minProduct);
+	return result;
+};
 
 module.exports = {
 	computeFoodFootprint,
