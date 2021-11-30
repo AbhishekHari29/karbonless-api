@@ -1,3 +1,4 @@
+const _ = require("lodash");
 const vision = require("@google-cloud/vision");
 const fs = require("fs");
 const path = require("path");
@@ -7,7 +8,11 @@ const requiredFields = ["name", "score"];
 // Creates a client
 const client = new vision.ImageAnnotatorClient({
 	credentials: {
-		private_key: process.env.GCS_PRIVATE_KEY,
+		private_key: _.replace(
+			process.env.GCS_PRIVATE_KEY,
+			new RegExp("\\\\n", "g"),
+			"\n"
+		),
 		client_email: process.env.GCS_CLIENT_EMAIL
 	}
 });
