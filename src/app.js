@@ -5,6 +5,7 @@ require("./db/mongoose");
 const userRouter = require("./routers/user");
 const activityRouter = require("./routers/activity");
 const footprintRouter = require("./routers/footprint");
+const recognitionRouter = require("./routers/recognition");
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(userRouter);
 app.use(activityRouter);
 app.use("/footprint", footprintRouter);
+app.use("/recognition", recognitionRouter);
 
 app.get("/", (req, res) => {
 	// res.send("Welcome to Karbonless API");
