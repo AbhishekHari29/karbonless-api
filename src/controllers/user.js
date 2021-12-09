@@ -100,13 +100,17 @@ const deleteUser = async (req, res) => {
 
 //Upload Profile avatar
 const uploadAvatar = async (req, res) => {
-	const buffer = await sharp(req.file.buffer)
-		.resize({ width: 250, height: 250 })
-		.png()
-		.toBuffer();
-	req.user.avatar = buffer;
-	await req.user.save();
-	res.send("Profile avatar uploaded successfully");
+	try {
+		const buffer = await sharp(req.file.buffer)
+			.resize({ width: 250, height: 250 })
+			.png()
+			.toBuffer();
+		req.user.avatar = buffer;
+		await req.user.save();
+		res.send("Profile avatar uploaded successfully");
+	} catch (error) {
+		res.status(500).send(error.message);
+	}
 };
 
 //Get Profile avatar
