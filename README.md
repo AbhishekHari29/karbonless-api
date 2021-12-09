@@ -29,8 +29,8 @@ This is a RESTful API for Karbonless app that helps users to keep track of the c
 ## Team Members and Role
 
 - Harhistha Devineni (Frontend Developer)
-- Daiyaan Ahmed (Frontend Developer - Application Design, Tracking, and UX)
-- Vaishnavi S Krishnan (UI Design & Prototype / Backend Developer - Image Recognition)
+- Daiyaan Ahmed (Frontend Developer - Application Design, Tracking)
+- Vaishnavi S Krishnan (UI/UX Design & Prototype / Backend Developer - Image Recognition)
 - Abhishek T (Backend Developer - User Management, Activity Logging, Reward System, Routing)
 - Janarthanan K (Backend Developer - Data gathering and aggregation)
 - Subha Shri S (Backend Developer - Data gathering and aggregation)
